@@ -1,26 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Provider } from 'react-redux';
+import store from './store/store';
+import Episodes from './views/Logged/Episodes/Episodes'
+import Characters from './views/Logged/Characters/Characters'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Switch>
+          <Route exact={true} path='/episodes' component={Episodes} />
+          <Route exact={true} path='/characters' component={Characters} />
+        </Switch>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
 export default App;
+
+// Campos Episodios : id, nombre, al aire
+// Campos Personajes: nombre, status, especie, genero e imagen
