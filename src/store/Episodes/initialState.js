@@ -1,5 +1,5 @@
 export const initialState = {
-    episodes: [],
+    episodesPages: [],
     episodesLoading: true,
     episodesError: null,
 }

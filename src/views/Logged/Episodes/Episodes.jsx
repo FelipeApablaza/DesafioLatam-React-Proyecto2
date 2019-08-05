@@ -1,10 +1,12 @@
 import React from 'react'
-import List from '../../../Components/Episodes/List';
+import Cards from '../../../Components/Episodes/Cards';
+import Header from '../../Common/Header';
 
 const Episodes = () => {
     return (
         <div>
-            <List />
+            <Header />
+            <Cards />
         </div>
     )
 }

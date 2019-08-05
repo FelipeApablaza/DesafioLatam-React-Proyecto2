@@ -2,7 +2,8 @@ import { initialState } from './initialState'
 import {
     GET_EPISODES_INIT,
     GET_EPISODES_SUCCESS,
-    GET_EPISODES_ERROR
+    GET_EPISODES_ERROR,
+    CLEAN_EPISODES
 } from './const'
 
 export default function (state = initialState, action) {
@@ -16,7 +17,7 @@ export default function (state = initialState, action) {
         case GET_EPISODES_SUCCESS: {
             return {
                 ...state,
-                episodes: action.payload,
+                episodesPages: state.episodesPages.concat(action.payload),
                 episodesLoading: false,
                 episodesError: false
             }
@@ -24,9 +25,14 @@ export default function (state = initialState, action) {
         case GET_EPISODES_ERROR: {
             return {
                 ...state,
-                episodes: state.episodes,
+                episodesPages: state.episodesPages,
                 episodesLoading: false,
                 episodesError: true
+            }
+        }
+        case CLEAN_EPISODES: {
+            return {
+                ...initialState
             }
         }
         default: {
