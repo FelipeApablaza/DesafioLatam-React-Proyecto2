@@ -22,7 +22,8 @@ export default function (state = initialState, action) {
                 ...state,
                 users: action.payload,
                 usersLoading: false,
-                usersError: false
+                usersError: false,
+
             }
         }
         case GET_USERS_ERROR: {
@@ -45,7 +46,8 @@ export default function (state = initialState, action) {
                 localStorage.setItem('id', user[0].id)
                 return {
                     ...state,
-                    errorMsg: ''
+                    errorMsg: '',
+                    okMsg: 'ok'
                 }
             } else {
                 return {
@@ -67,7 +69,8 @@ export default function (state = initialState, action) {
             localStorage.setItem('id', action.payload.data.id)
             return {
                 ...state,
-                errorMsg: ''
+                errorMsg: '',
+                okMsg: 'ok'
             }
         }
         case SET_SIGNUP_ERROR: {

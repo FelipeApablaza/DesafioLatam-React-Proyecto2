@@ -3,7 +3,8 @@ import {
     GET_EPISODES_INIT,
     GET_EPISODES_SUCCESS,
     GET_EPISODES_ERROR,
-    CLEAN_EPISODES
+    CLEAN_EPISODES,
+    GET_USER
 } from './const'
 
 export default function (state = initialState, action) {
@@ -33,6 +34,12 @@ export default function (state = initialState, action) {
         case CLEAN_EPISODES: {
             return {
                 ...initialState
+            }
+        }
+        case GET_USER: {
+            return {
+                ...state,
+                favoriteEpisodes: action.payload.data.favoriteEpisodes
             }
         }
         default: {

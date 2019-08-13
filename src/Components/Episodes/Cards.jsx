@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { getEpisodesAction, cleanEpisodesAction } from '../../store/Episodes/actions'
+import { getEpisodesAction, cleanEpisodesAction, getUserAction } from '../../store/Episodes/actions'
 import Card from './Card'
+import axios from 'axios'
+
 
 const url = 'https://rickandmortyapi.com/api/episode/'
+const userUrl = 'http://localhost:3000/users/'
 
 const Cards = props => {
 
-    const { getEpisodes, cleanEpisodes, episodesPages, episodesLoading, episodesError } = props
+    const { favoriteEpisodes, getEpisodes, cleanEpisodes, episodesPages, episodesLoading, episodesError, getUser } = props
 
     const [seeMoreButton, setSeeMoreButton] = useState(true)
 
     const [nextPageUrl, setNextPageUrl] = useState('')
 
     useEffect(() => {
+        getUser(userUrl)
+    }, [getUser])
+
+    useEffect(() => {
         getEpisodes(url)
-        // console.log('effect2')
     }, [getEpisodes])
 
     useEffect(() => {
@@ -41,11 +47,25 @@ const Cards = props => {
         getEpisodes(nextPageUrl)
     }
 
+    const userId = localStorage.getItem('id')
+
+    const handlerOnFav = async (id) => {
+      const thisUser = await axios.get(userUrl+userId) 
+      if (thisUser.data.favoriteEpisodes.includes(id.toString())){
+        const newFav = thisUser.data.favoriteEpisodes.filter((item) => item!==id.toString())
+        thisUser.data.favoriteEpisodes = newFav
+    } else {
+          thisUser.data.favoriteEpisodes.push(id.toString())
+      }
+      await axios.put(userUrl+userId, {...thisUser.data})
+      getUser(userUrl)
+    }
+
     return (
         <div>
             <div>
                 {
-                    episodesPages.map((page) => page.results.map((item, index) => <Card key={index} episode={item} />))
+                    episodesPages.map((page) => page.results.map((item, index) => <Card key={index} episode={item} fav={favoriteEpisodes.includes((item.id).toString()) ? 'heart': 'unheart'} handler={handlerOnFav}/>))
                 }
             </div>
             <div>
@@ -61,13 +81,16 @@ const Cards = props => {
 const mapStateToProps = ({ episodes }) => ({
     episodesPages: episodes.episodesPages,
     episodesLoading: episodes.episodesLoading,
-    episodesError: episodes.episodesError
+    episodesError: episodes.episodesError,
+    favoriteEpisodes: episodes.favoriteEpisodes
 })
 
 
 const mapDispatchToProps = dispatch => ({
     getEpisodes: payload => dispatch(getEpisodesAction(payload)),
-    cleanEpisodes: payload => dispatch(cleanEpisodesAction(payload))
+    cleanEpisodes: payload => dispatch(cleanEpisodesAction(payload)),
+    getUser: payload => dispatch(getUserAction(payload))
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cards)

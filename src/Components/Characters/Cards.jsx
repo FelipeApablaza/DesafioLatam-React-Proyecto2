@@ -60,6 +60,7 @@ const Cards = props => {
       getUser(userUrl)
     }
 
+    // console.log(favoriteCharacters)
     return (
         <div>
             <div style={{ textAlign: 'justify' }} >

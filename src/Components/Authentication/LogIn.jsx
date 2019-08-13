@@ -14,7 +14,7 @@ const LogIn = props => {
 
     const logged = localStorage.getItem('logged')
 
-    const { getUsers, usersLoading, usersError, errorMsg } = props
+    const { getUsers, usersLoading, usersError, errorMsg, okMsg } = props
 
     const [state, setState] = useState(defautlState)
 
@@ -36,6 +36,7 @@ const LogIn = props => {
                             <input name='email' value={state.email} onChange={handlerOnChange} placeholder='email'></input>
                             <button onClick={handlerOnClick}>LogIn</button>
                             {errorMsg}
+                            {okMsg}
                         </div>
                 }
             </div>
@@ -50,7 +51,8 @@ const mapStateToProps = ({ authentication }) => ({
     users: authentication.users,
     usersLoading: authentication.usersLoading,
     usersError: authentication.usersError,
-    errorMsg: authentication.errorMsg
+    errorMsg: authentication.errorMsg,
+    okMsg: authentication.okMsg
 })
 
 const mapDispatchToProps = dispatch => ({

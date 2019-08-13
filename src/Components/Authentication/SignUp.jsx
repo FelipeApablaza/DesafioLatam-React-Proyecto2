@@ -13,7 +13,7 @@ const SingUp = props => {
 
     const logged = localStorage.getItem('logged')
 
-    const { setSignUp, errorMsg } = props
+    const { setSignUp, errorMsg, okMsg } = props
 
     const [state, setState] = useState(defaultState)
 
@@ -32,6 +32,7 @@ const SingUp = props => {
                 <input name='email' value={state.email} onChange={handlerOnChange} placeholder='email'></input>
                 <button onClick={handlerOnClick} >SignUp</button>
                 {errorMsg}
+                {okMsg}
             </div>
         )
     } else {
@@ -39,7 +40,8 @@ const SingUp = props => {
     }
 }
 const mapStateToProps = ({ authentication }) => ({
-    errorMsg: authentication.errorMsg
+    errorMsg: authentication.errorMsg,
+    okMsg: authentication.okMsg
 })
 
 const mapDispatchToProps = dispatch => ({

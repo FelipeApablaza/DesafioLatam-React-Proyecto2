@@ -3,4 +3,5 @@ export const initialState = {
     usersLoading: false,
     usersError: null,
     errorMsg: '',
+    okMsg: '',
 }
