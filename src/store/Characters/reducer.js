@@ -3,7 +3,8 @@ import {
     GET_CHARACTERS_INIT,
     GET_CHARACTERS_SUCCESS,
     GET_CHARACTERS_ERROR,
-    CLEAN_CHARACTERS
+    CLEAN_CHARACTERS,
+    GET_USER
 } from './const'
 
 export default function (state = initialState, action) {
@@ -33,6 +34,12 @@ export default function (state = initialState, action) {
         case CLEAN_CHARACTERS: {
             return {
                 ...initialState
+            }
+        }
+        case GET_USER: {
+            return {
+                ...state,
+                favoriteCharacters: action.payload.data.favoriteCharacters
             }
         }
         default: {
